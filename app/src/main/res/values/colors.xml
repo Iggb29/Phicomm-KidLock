@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black_overlay">#E6111A11</color>
+    <color name="white">#FFFFFF</color>
+    <color name="accent_yellow">#FFD700</color>
+</resources>
