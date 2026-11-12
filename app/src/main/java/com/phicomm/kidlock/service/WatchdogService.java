@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 
+import com.phicomm.kidlock.core.ZenConfig;
 import com.phicomm.kidlock.ui.LockActivity;
 import com.phicomm.kidlock.util.Prefs;
 import com.phicomm.kidlock.util.RootUtils;
@@ -18,7 +19,6 @@ public class WatchdogService extends Service {
     public void onCreate() {
         super.onCreate();
         handler = new Handler(Looper.getMainLooper());
-
         ticker = new Runnable() {
             @Override
             public void run() {
@@ -30,13 +30,17 @@ public class WatchdogService extends Service {
     }
 
     private void handleTick() {
-        int state = Prefs.getState(this);
+        // 核心进化：夜间免打扰时段，看门狗彻底静默休眠，不打扰成年人看电影
+        if (ZenConfig.isNightCurfew(this)) {
+            return;
+        }
 
+        int state = Prefs.getState(this);
         if (state == Prefs.STATE_NORMAL) {
             int watchSec = Prefs.getWatchSeconds(this) - 1;
             if (watchSec <= 0) {
                 Prefs.setState(this, Prefs.STATE_RESTING);
-                Prefs.setRestSeconds(this, Prefs.DEFAULT_REST_SECONDS);
+                Prefs.setRestSeconds(this, ZenConfig.get(this).rules.default_rest_seconds);
                 launchLockActivity();
             } else {
                 Prefs.setWatchSeconds(this, watchSec);

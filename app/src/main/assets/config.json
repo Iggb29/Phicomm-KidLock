@@ -1,0 +1,12 @@
+{
+  "curfew": {
+    "enabled": true,
+    "start_time": "21:00",
+    "end_time": "07:00"
+  },
+  "rules": {
+    "default_watch_seconds": 1800,
+    "default_rest_seconds": 600,
+    "reward_seconds_per_quiz": 1800
+  }
+}
