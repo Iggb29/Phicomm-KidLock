@@ -6,6 +6,7 @@
     android:orientation="vertical"
     android:background="#121212"
     android:padding="20dp">
+
     <TextView
         android:id="@+id/tv_status"
         android:layout_width="wrap_content"
@@ -13,14 +14,45 @@
         android:textColor="#FFFFFF"
         android:textSize="22sp"
         android:text="正在检查 Root 权限..." />
+
     <Button
         android:id="@+id/btn_grant"
         android:layout_width="260dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="30dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="25dp"
         android:background="@drawable/btn_tv_selector"
         android:focusable="true"
         android:textColor="#FFFFFF"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:text="授权并启动守护" />
+
+    <!-- 测试专用区域 -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_test_quiz"
+            android:layout_width="160dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/btn_tv_selector"
+            android:focusable="true"
+            android:textColor="#FFD700"
+            android:textSize="16sp"
+            android:text="⚡ 测试：立即答题" />
+
+        <Button
+            android:id="@+id/btn_test_rest"
+            android:layout_width="160dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/btn_tv_selector"
+            android:focusable="true"
+            android:textColor="#81D4FA"
+            android:textSize="16sp"
+            android:text="⏳ 测试：休息10秒" />
+    </LinearLayout>
 </LinearLayout>

@@ -21,6 +21,8 @@ import com.phicomm.kidlock.R;
 import com.phicomm.kidlock.model.Question;
 import com.phicomm.kidlock.util.Prefs;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
@@ -79,10 +81,18 @@ public class LockActivity extends AppCompatActivity {
 
     private void loadQuestions() {
         try {
-            AssetManager am = getAssets();
-            InputStream is = am.open("questions.json");
+            InputStream is;
+            File extFile = new File("/sdcard/questions.json");
+            // 优先读取外挂题库
+            if (extFile.exists() && extFile.length() > 0) {
+                is = new FileInputStream(extFile);
+                Toast.makeText(this, "📚 已加载外挂题库", Toast.LENGTH_SHORT).show();
+            } else {
+                AssetManager am = getAssets();
+                is = am.open("questions.json");
+            }
             Type listType = new TypeToken<List<Question>>(){}.getType();
-            questionList = new Gson().fromJson(new InputStreamReader(is), listType);
+            questionList = new Gson().fromJson(new InputStreamReader(is, "UTF-8"), listType);
             Collections.shuffle(questionList);
         } catch (Exception e) {
             e.printStackTrace();
@@ -144,7 +154,7 @@ public class LockActivity extends AppCompatActivity {
 
     private void checkAnswer(int selected) {
         if (currentQ == null) return;
-        for (Button btn : btnOptions) btn.setEnabled(false); // 禁用按钮防连点
+        for (Button btn : btnOptions) btn.setEnabled(false);
 
         if (selected == currentQ.answer) {
             correctCount++;

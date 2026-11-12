@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
 
         TextView tvStatus = findViewById(R.id.tv_status);
         Button btnGrant = findViewById(R.id.btn_grant);
+        Button btnTestQuiz = findViewById(R.id.btn_test_quiz);
+        Button btnTestRest = findViewById(R.id.btn_test_rest);
 
         btnGrant.setOnClickListener(v -> {
             boolean hasRoot = RootUtils.checkRoot();
@@ -31,6 +33,23 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 tvStatus.setText("状态：未获得 Root 权限，请在弹窗中允许！");
             }
+        });
+
+        // 测试功能 1：立即进入答题界面
+        btnTestQuiz.setOnClickListener(v -> {
+            Prefs.setState(this, Prefs.STATE_QUIZ);
+            Intent intent = new Intent(this, LockActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        });
+
+        // 测试功能 2：设置休息 10 秒，走完自动转入答题
+        btnTestRest.setOnClickListener(v -> {
+            Prefs.setState(this, Prefs.STATE_RESTING);
+            Prefs.setRestSeconds(this, 10);
+            Intent intent = new Intent(this, LockActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         });
     }
 }
